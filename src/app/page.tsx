@@ -4,9 +4,10 @@ import TaskItem from './ui/TaskItem';
 import { useContext } from 'react';
 import { TaskContext } from './providers/TaskProvider';
 import { BarLoader } from 'react-spinners';
+import { Span } from 'next/dist/trace';
 
 export default function Home() {
-    const { tasks, loading } = useContext(TaskContext)!;
+    const { tasks, loading, initialLoad } = useContext(TaskContext)!;
 
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -33,14 +34,24 @@ export default function Home() {
                         {/* task list container */}
                         <div>
                             <ul className="flex flex-col gap-4">
-                                {tasks.map((task) => (
-                                    <TaskItem
-                                        key={task.id}
-                                        id={task.id!}
-                                        task_name={task.task_name}
-                                        status={task.status}
-                                    />
-                                ))}
+                                {initialLoad ? (
+                                    <span className="border-dashed border p-4 border-amber-600 bg-amber-100">
+                                        Loading... 💁‍♂️
+                                    </span>
+                                ) : tasks.length > 0 ? (
+                                    tasks.map((task) => (
+                                        <TaskItem
+                                            key={task.id}
+                                            id={task.id!}
+                                            task_name={task.task_name}
+                                            status={task.status}
+                                        />
+                                    ))
+                                ) : (
+                                    <span className="border-dashed border p-4 border-amber-600 bg-amber-100">
+                                        No Tasks. Please Add! 💁‍♂️
+                                    </span>
+                                )}
                             </ul>
                         </div>
                     </div>

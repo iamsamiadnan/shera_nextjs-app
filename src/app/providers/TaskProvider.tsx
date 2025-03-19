@@ -16,6 +16,7 @@ interface TaskContextType {
     handleUpdateTask: (id: number, status: TaskStatus) => Promise<void>;
     loading: boolean;
     setLoading: (loading: boolean) => void;
+    initialLoad: boolean;
 }
 
 export const TaskContext = createContext<TaskContextType | undefined>(
@@ -24,7 +25,8 @@ export const TaskContext = createContext<TaskContextType | undefined>(
 
 export default function TaskProvider({ children }: { children: ReactNode }) {
     const [tasks, setTasks] = useState([]);
-    let [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [initialLoad, setInitialLoad] = useState(true);
 
     useEffect(() => {
         try {
@@ -38,11 +40,15 @@ export default function TaskProvider({ children }: { children: ReactNode }) {
                 const data = await response.json();
                 setTasks(data);
                 console.log(data);
+                setLoading(false);
+                setInitialLoad(false);
             };
 
             fetchTasks();
         } catch (err) {
             console.log(err);
+            setLoading(false);
+            setInitialLoad(false);
         }
     }, []);
 
@@ -133,6 +139,7 @@ export default function TaskProvider({ children }: { children: ReactNode }) {
                 handleUpdateTask,
                 loading,
                 setLoading,
+                initialLoad,
             }}
         >
             {children}
