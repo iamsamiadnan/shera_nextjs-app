@@ -29,7 +29,7 @@ export default function TaskInput() {
             status: TaskStatus.PENDING,
         };
 
-        handleAddTask(task);
+        handleAddTask(task, setTaskText);
     };
 
     return (

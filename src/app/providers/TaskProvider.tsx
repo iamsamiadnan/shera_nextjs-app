@@ -8,7 +8,10 @@ import TaskStatus from '../enums/TaskStatus';
 
 interface TaskContextType {
     tasks: Task[];
-    handleAddTask: (task: Task) => Promise<void>;
+    handleAddTask: (
+        task: Task,
+        setTaskText: (taskText: string) => void
+    ) => Promise<void>;
     handleDeleteTask: (id: number) => Promise<void>;
     handleUpdateTask: (id: number, status: TaskStatus) => Promise<void>;
     loading: boolean;
@@ -43,7 +46,10 @@ export default function TaskProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
-    const handleAddTask = async (task: Task) => {
+    const handleAddTask = async (
+        task: Task,
+        setTaskText: (taskText: string) => void
+    ) => {
         try {
             const addTasks = async () => {
                 const response = await fetch(
@@ -60,6 +66,7 @@ export default function TaskProvider({ children }: { children: ReactNode }) {
                 setTasks(data);
                 console.log(data);
                 setLoading(false);
+                setTaskText('');
             };
 
             addTasks();
