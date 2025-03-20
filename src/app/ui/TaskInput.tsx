@@ -40,6 +40,7 @@ export default function TaskInput() {
                     className="border border-r-0 rounded rounded-r-none h-9 flex-1 px-6 hover:outline-0 focus:outline-0"
                     value={taskText}
                     onChange={(e) => handleTaskText(e.target.value)}
+                    placeholder="What's on your list? 👋"
                 />
                 <input
                     type="submit"
