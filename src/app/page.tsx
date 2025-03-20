@@ -4,7 +4,6 @@ import TaskItem from './ui/TaskItem';
 import { useContext } from 'react';
 import { TaskContext } from './providers/TaskProvider';
 import { BarLoader } from 'react-spinners';
-import { Span } from 'next/dist/trace';
 
 export default function Home() {
     const { tasks, loading, initialLoad } = useContext(TaskContext)!;

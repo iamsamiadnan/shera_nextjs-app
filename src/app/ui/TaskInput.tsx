@@ -2,12 +2,11 @@ import { useContext, useState } from 'react';
 import { TaskContext } from '../providers/TaskProvider';
 import Task from '../types/Task';
 import TaskStatus from '../enums/TaskStatus';
-import { BarLoader, MoonLoader } from 'react-spinners';
 
 export default function TaskInput() {
     const [taskText, setTaskText] = useState('');
     const [error, setError] = useState('');
-    const { handleAddTask, setLoading, loading } = useContext(TaskContext)!;
+    const { handleAddTask, setLoading } = useContext(TaskContext)!;
 
     // handling validation on change
     const handleTaskText = (text: string) => {

@@ -1,7 +1,6 @@
 'use client';
 
-import { AppContextType } from 'next/dist/shared/lib/utils';
-import { ContextType, createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { ReactNode } from 'react';
 import Task from '../types/Task';
 import TaskStatus from '../enums/TaskStatus';
