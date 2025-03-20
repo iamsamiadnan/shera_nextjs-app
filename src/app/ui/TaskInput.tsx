@@ -21,6 +21,22 @@ export default function TaskInput() {
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (taskText == '') {
+            const funnyMessages = [
+                'Is your task to do... nothing?  Try again!',
+                'Ah, the invisible task. A classic. Care to be more specific?',
+                'Silence is golden, but not when it comes to tasks.  Type something!',
+                'I admire your minimalism, but I need something to add.',
+                "Are you sure you don't have any tasks? Not even 'breathe'?",
+            ];
+            const randomIndex = Math.floor(
+                Math.random() * funnyMessages.length
+            );
+            setError(`🙅‍♂️ ${funnyMessages[randomIndex]}`);
+            return;
+        }
+
         setLoading(true);
 
         const task: Task = {
