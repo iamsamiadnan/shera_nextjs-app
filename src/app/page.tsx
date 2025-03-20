@@ -4,6 +4,7 @@ import TaskItem from './ui/TaskItem';
 import { useContext } from 'react';
 import { TaskContext } from './providers/TaskProvider';
 import { BarLoader } from 'react-spinners';
+import Filter from './ui/Filter';
 
 export default function Home() {
     const { tasks, loading, initialLoad } = useContext(TaskContext)!;
@@ -24,11 +25,13 @@ export default function Home() {
                     />
 
                     <div className="p-6">
-                        <header className="mb-6">
+                        <header className="mb-4">
                             <h1 className="text-3xl mb-4">Taskify List 📝</h1>
 
                             <TaskInput />
                         </header>
+
+                        <Filter />
 
                         {/* task list container */}
                         <div>

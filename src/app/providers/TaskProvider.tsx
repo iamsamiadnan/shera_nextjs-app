@@ -13,9 +13,11 @@ interface TaskContextType {
     ) => Promise<void>;
     handleDeleteTask: (id: number) => Promise<void>;
     handleUpdateTask: (id: number, status: TaskStatus) => Promise<void>;
+    handleShowTasks: (query_string?: string) => void;
     loading: boolean;
     setLoading: (loading: boolean) => void;
     initialLoad: boolean;
+    currentQueryString: string;
 }
 
 export const TaskContext = createContext<TaskContextType | undefined>(
@@ -26,12 +28,19 @@ export default function TaskProvider({ children }: { children: ReactNode }) {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [initialLoad, setInitialLoad] = useState(true);
+    const [currentQueryString, setCurrentQueryString] = useState('');
 
     useEffect(() => {
+        handleShowTasks();
+    }, []);
+
+    const handleShowTasks = (query_string = '') => {
+        setLoading(true);
+        setCurrentQueryString(query_string);
         try {
             const fetchTasks = async () => {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_HOST}/tasks/`,
+                    `${process.env.NEXT_PUBLIC_HOST}/tasks/${query_string}`,
                     {
                         method: 'GET',
                     }
@@ -49,7 +58,7 @@ export default function TaskProvider({ children }: { children: ReactNode }) {
             setLoading(false);
             setInitialLoad(false);
         }
-    }, []);
+    };
 
     const handleAddTask = async (
         task: Task,
@@ -132,13 +141,16 @@ export default function TaskProvider({ children }: { children: ReactNode }) {
     return (
         <TaskContext.Provider
             value={{
+                initialLoad,
+                loading,
                 tasks,
+                currentQueryString,
+
                 handleAddTask,
                 handleDeleteTask,
                 handleUpdateTask,
-                loading,
+                handleShowTasks,
                 setLoading,
-                initialLoad,
             }}
         >
             {children}
