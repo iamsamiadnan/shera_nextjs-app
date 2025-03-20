@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { TaskContext } from '../providers/TaskProvider';
-import TaskStatus from '../enums/TaskStatus';
 
 export default function Filter() {
     const { handleShowTasks, currentQueryString } = useContext(TaskContext)!;
